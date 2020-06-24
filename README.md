@@ -15,7 +15,7 @@ Use `$ python script.py` to run the script.
 
 4. Log into your reddit account and follow [this link](https://www.reddit.com/prefs/apps) and click **create app** or **create another app** button at the bottom left.
 
-5. Create your application by providing a name, descripotion, and select the **script** option. Put `http://localhost:8080` in the redirect uri field (from [praw docs](https://praw.readthedocs.io/en/latest/getting_started/authentication.html).
+5. Create your application by providing a name, descripotion, and select the **script** option. Put `http://localhost:8080` in the redirect uri field (from [praw docs](https://praw.readthedocs.io/en/latest/getting_started/authentication.html)).
 
 6. Click **create app** and take note of your 14-char **personal use script** and 27-char **secret**.
 
