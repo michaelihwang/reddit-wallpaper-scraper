@@ -11,7 +11,7 @@ import urllib.parse
 from dotenv import load_dotenv
 load_dotenv()
 
-MAX_NUM_IMAGES = 5
+MAX_NUM_IMAGES = 100
 IMAGE_DIRERCTORY_PATH = os.path.expanduser("~") + "/Pictures/Reddit_Wallpapers"
 
 if os.path.exists(IMAGE_DIRERCTORY_PATH):
