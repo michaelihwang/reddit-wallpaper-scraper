@@ -58,10 +58,6 @@ for image_link in image_links:
     with open(f"reddit_wallpaper_{i+1}.jpg", "wb+") as img_file:
         img_file.write(image_data)
         count += 1
-        # filter under 200 KB - too fuzzy
-        if os.stat(f"reddit_wallpaper_{i+1}.jpg").st_size < 200000:
-            os.remove(f"reddit_wallpaper_{i+1}.jpg")
-            count -= 1
 
         # height of image (in 2 bytes) is at 164th position
         img_file.seek(163)
@@ -69,8 +65,9 @@ for image_link in image_links:
         height = (a[0] << 8) + a[1]
         a = img_file.read(2)    # next 2 bytes is width
         width = (a[0] << 8) + a[1]
-        # filter anything less than 2880x1800 (MBP 15-inch resolution)
-        if width < 2880 or height < 1800:
+
+        # filter under 200 KB or ranything less than 2880x1800 (MBP 15-inch resolution)
+        if os.stat(f"reddit_wallpaper_{i+1}.jpg").st_size < 200000 or width < 2880 or height < 1800:
             os.remove(f"reddit_wallpaper_{i+1}.jpg")
             count -= 1
     i += 1
