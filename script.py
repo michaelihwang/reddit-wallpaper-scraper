@@ -11,6 +11,8 @@ import urllib.parse
 from dotenv import load_dotenv
 load_dotenv()
 
+# Change the constants below to modify the number of max images to fetch and
+# the destination directory of these images
 MAX_NUM_IMAGES = 100
 IMAGE_DIRERCTORY_PATH = os.path.expanduser("~") + "/Pictures/Reddit_Wallpapers"
 
