@@ -3,19 +3,26 @@ import praw
 import requests
 import sys
 import os
+import pyautogui
 
 from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
-import urllib.parse
-
 from dotenv import load_dotenv
+from PIL import Image
+import urllib.parse
+from urllib.request import Request, urlopen
+
 load_dotenv()
 
 # Change the constants below to modify the number of max images to fetch and
 # the destination directory of these images
 MAX_NUM_IMAGES = 100
 IMAGE_DIRERCTORY_PATH = os.path.expanduser("~") + "/Pictures/Reddit_Wallpapers"
+SYSTEM_SCREEN_WIDTH, SYSTEM_SCREEN_HEIGHT = pyautogui.size()
 
+print("SYSTEM_SCREEN_RESOLUTION:", SYSTEM_SCREEN_WIDTH, "x", SYSTEM_SCREEN_HEIGHT)
+print("IMAGE_DIRERCTORY_PATH:", IMAGE_DIRERCTORY_PATH)
+
+# PHASE 0: ensure destination directory exists
 if os.path.exists(IMAGE_DIRERCTORY_PATH):
     os.chdir("/Users/michaelihwang/Pictures/Reddit_Wallpapers")
     print("Sucessfully navigated to directory: /Users/<User>/Pictures/Reddit_Wallpapers")
@@ -39,7 +46,8 @@ for submission in subreddit.hot(limit=MAX_NUM_IMAGES):
 # PHASE 2: from submission links, get unique submission image links
 image_links = set()
 for i in range(len(submission_links)):
-    sys.stdout.write(f"\rProcessing wallpaper image {i+1} of {MAX_NUM_IMAGES}.")
+    sys.stdout.write(
+        f"\rProcessing wallpaper image {i+1} of {MAX_NUM_IMAGES}.")
     image_link_URL = submission_links[i][:21] + \
         urllib.parse.quote(submission_links[i][21:])
     req = Request(image_link_URL, headers={"User-Agent": "Mozilla/5.0"})
@@ -53,23 +61,20 @@ for i in range(len(submission_links)):
 # PHASE 3: go through image links and save them in IMAGE_DIRERCTORY_PATH
 i, count = 0, 0
 for image_link in image_links:
-    sys.stdout.write(f"\rDownloading wallpaper image {i+1} of {len(image_links)}.")
+    sys.stdout.write(
+        f"\rDownloading wallpaper image {i+1} of {len(image_links)}.")
     image_data = requests.get(image_link).content
-    with open(f"reddit_wallpaper_{i+1}.jpg", "wb+") as img_file:
-        img_file.write(image_data)
+    with open(f"reddit_wallpaper_{i+1}.jpg", "wb+") as image_file:
+        image_file.write(image_data)
         count += 1
 
-        # height of image (in 2 bytes) is at 164th position
-        img_file.seek(163)
-        a = img_file.read(2)    # read the 2 bytes
-        height = (a[0] << 8) + a[1]
-        a = img_file.read(2)    # next 2 bytes is width
-        width = (a[0] << 8) + a[1]
-
+    with Image.open(f"reddit_wallpaper_{i+1}.jpg") as image_file:
+        width, height = image_file.size
         # filter under 200 KB or ranything less than 2880x1800 (MBP 15-inch resolution)
-        if os.stat(f"reddit_wallpaper_{i+1}.jpg").st_size < 200000 or width < 2880 or height < 1800:
+        if os.stat(f"reddit_wallpaper_{i+1}.jpg").st_size < 200000 or width < SYSTEM_SCREEN_WIDTH or height < SYSTEM_SCREEN_HEIGHT:
             os.remove(f"reddit_wallpaper_{i+1}.jpg")
             count -= 1
     i += 1
 
-print(f"\rSuccessfully Downloaded {count} wallpapers from /r/wallpaper's top {MAX_NUM_IMAGES} hottest submissions")
+print(
+    f"\rSuccessfully Downloaded {count} wallpapers from /r/wallpaper's top {MAX_NUM_IMAGES} hottest submissions")
