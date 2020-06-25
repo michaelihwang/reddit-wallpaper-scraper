@@ -1,7 +1,7 @@
 # Reddit Wallpaper Scraper
 Get 100 images from /r/wallpapers's hot tab via [Python Reddit API Wrapper](https://praw.readthedocs.io/en/latest/getting_started/quick_start.html).
 
-The script saves images in directory `/Users/<User>/Pictures/Reddit_Wallpapers` that are **at least 200KB** in size and has a resolution of **at least 2880x1800** (MBP 15-inch resolution).
+By default, the script saves images in directory `/Users/<User>/Pictures/Reddit_Wallpapers` that are **at least 200KB** in size and that has a resolution of **at least** your current screen resolution. Feel free to change the destination folder path.
 
 Use `$ python script.py` to run the script.
 
