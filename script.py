@@ -27,12 +27,11 @@ if os.path.exists(IMAGE_DIRERCTORY_PATH):
     os.chdir("/Users/michaelihwang/Pictures/Reddit_Wallpapers")
     print("Sucessfully navigated to directory: /Users/<User>/Pictures/Reddit_Wallpapers")
 else:
-    raise OSError(
-        "The directory path: /Users/<User>/Pictures/Reddit_Wallpapers does not exist...")
+    raise OSError("The directory path: /Users/<User>/Pictures/Reddit_Wallpapers does not exist...")
 
 reddit = praw.Reddit(client_id=os.getenv("PERSONAL_USE_SCRIPT"),
                      client_secret=os.getenv("SECRET_KEY"),
-                     user_agent="get-reddit-wallpapers-script by /u/doctorblowhole",
+                     user_agent="get-reddit-wallpapers-script by /u/" + os.getenv("REDDIT_USERNAME"),
                      username=os.getenv("REDDIT_USERNAME"),
                      password=os.getenv("REDDIT_PASSWORD"))
 
@@ -46,8 +45,7 @@ for submission in subreddit.hot(limit=MAX_NUM_IMAGES):
 # PHASE 2: from submission links, get unique submission image links
 image_links = set()
 for i in range(len(submission_links)):
-    sys.stdout.write(
-        f"\rProcessing wallpaper image {i+1} of {MAX_NUM_IMAGES}.")
+    sys.stdout.write(f"\rProcessing wallpaper image {i+1} of {MAX_NUM_IMAGES}.")
     image_link_URL = submission_links[i][:21] + \
         urllib.parse.quote(submission_links[i][21:])
     req = Request(image_link_URL, headers={"User-Agent": "Mozilla/5.0"})
@@ -61,8 +59,7 @@ for i in range(len(submission_links)):
 # PHASE 3: go through image links and save them in IMAGE_DIRERCTORY_PATH
 i, count = 0, 0
 for image_link in image_links:
-    sys.stdout.write(
-        f"\rDownloading wallpaper image {i+1} of {len(image_links)}.")
+    sys.stdout.write(f"\rDownloading wallpaper image {i+1} of {len(image_links)}.")
     image_data = requests.get(image_link).content
     with open(f"reddit_wallpaper_{i+1}.jpg", "wb+") as image_file:
         image_file.write(image_data)
@@ -70,11 +67,10 @@ for image_link in image_links:
 
     with Image.open(f"reddit_wallpaper_{i+1}.jpg") as image_file:
         width, height = image_file.size
-        # filter under 200 KB or ranything less than 2880x1800 (MBP 15-inch resolution)
+        # filter under 200 KB or anything less than system screen resolution
         if os.stat(f"reddit_wallpaper_{i+1}.jpg").st_size < 200000 or width < SYSTEM_SCREEN_WIDTH or height < SYSTEM_SCREEN_HEIGHT:
             os.remove(f"reddit_wallpaper_{i+1}.jpg")
             count -= 1
     i += 1
 
-print(
-    f"\rSuccessfully Downloaded {count} wallpapers from /r/wallpaper's top {MAX_NUM_IMAGES} hottest submissions")
+print(f"\rSuccessfully Downloaded {count} wallpapers from /r/wallpaper's top {MAX_NUM_IMAGES} hottest submissions")
