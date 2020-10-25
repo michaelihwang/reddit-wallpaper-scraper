@@ -1,15 +1,15 @@
 #! usr/bin/env python3
-import praw
-import requests
-import sys
 import os
-import pyautogui
+import sys
+import urllib.parse
+from urllib.request import Request, urlopen
 
+import praw
+import pyautogui
+import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from PIL import Image
-import urllib.parse
-from urllib.request import Request, urlopen
 
 load_dotenv()
 
@@ -21,6 +21,10 @@ SYSTEM_SCREEN_WIDTH, SYSTEM_SCREEN_HEIGHT = pyautogui.size()
 
 print("SYSTEM_SCREEN_RESOLUTION:", SYSTEM_SCREEN_WIDTH, "x", SYSTEM_SCREEN_HEIGHT)
 print("IMAGE_DIRERCTORY_PATH:", IMAGE_DIRERCTORY_PATH)
+
+# Check if command line argument for num images is provided
+if len(sys.argv):
+    MAX_NUM_IMAGES = int(sys.argv[1])
 
 # PHASE 0: ensure destination directory exists
 if os.path.exists(IMAGE_DIRERCTORY_PATH):

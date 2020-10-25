@@ -1,15 +1,15 @@
 # Reddit Wallpaper Scraper
-Get 100 images from /r/wallpapers's hot tab via [Python Reddit API Wrapper](https://praw.readthedocs.io/en/latest/getting_started/quick_start.html).
+Get top images from /r/wallpapers's hot tab via [Python Reddit API Wrapper](https://praw.readthedocs.io/en/latest/getting_started/quick_start.html).
 
 By default, the script saves images in directory `/Users/<User>/Pictures/Reddit_Wallpapers` that are **at least 200KB** in size and that has a resolution of **at least** your current screen resolution. Feel free to change the destination folder path.
 
-Use `$ python script.py` to run the script.
+Use `$ python3 script.py [max_num_img]` to run the script.
 
 ## Setup and Running Script
 
 1. Clone this repository
 
-2. Use `pip install -r requirements.txt` to install dependencies if they are missing
+2. Use `pip3 install -r requirements.txt` to install dependencies if they are missing
 
 3. Create directory `/Users/<User>/Pictures/Reddit_Wallpapers` (or change destination directory in the script).
 
@@ -27,13 +27,13 @@ REDDIT_USERNAME="my_derpy_username"
 REDDIT_PASSWORD="my_derpy_password"
 ```
 
-8. In `script.py` modify constants: `MAX_NUM_IMAGES` and/or `IMAGE_DIRECTORY_PATH` if you wish.
+1. In `script.py` setup destination folder: `IMAGE_DIRECTORY_PATH`.
 
-9. On the command line, run `$ python script.py`
+2. On the command line, run `$ python3 script.py` for default 100 images, or `$ python3 script.py 5` to download 5.
 
-10. Open Desktop & Screensaver via Settings and add `Reddit_Wallpapers` (or your directory if you changed it). Cycle it and/or randomize it as you wish.
+3. Open Desktop & Screensaver via Settings and add `Reddit_Wallpapers` (or your directory if you changed it). Cycle it and/or randomize it as you wish.
 
-11. DONE!
+4. DONE!
 
 ## License
 MIT License Copyright © 2020 Michael Hwang
