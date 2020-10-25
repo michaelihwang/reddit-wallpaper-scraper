@@ -7,9 +7,9 @@ Use `$ python3 script.py [max_num_img]` to run the script.
 
 ## Setup and Running Script
 
-1. Clone this repository
+1. Clone this repository via `git clone https://github.com/michaelihwang/reddit-wallpaper-scraper.git`.
 
-2. Use `pip3 install -r requirements.txt` to install dependencies if they are missing
+2. Use `pip3 install -r requirements.txt` to install dependencies if they are missing.
 
 3. Create directory `/Users/<User>/Pictures/Reddit_Wallpapers` (or change destination directory in the script).
 
