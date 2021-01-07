@@ -1,6 +1,6 @@
 autopep8==1.5.3
 beautifulsoup4==4.9.0
-lxml==4.5.0
+lxml==4.6.2
 pep8==1.7.1
 praw==7.1.0
 prawcore==1.4.0
